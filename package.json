@@ -1,0 +1,31 @@
+{
+  "name": "sign-to-speech-converter",
+  "version": "2.0.0",
+  "description": "Advanced Sign Language to Speech Converter using Neural Networks and ML",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "npx http-server -p 8000 -c-1",
+    "dev": "node server.js",
+    "client": "npx http-server -p 8000 -c-1 -o"
+  },
+  "keywords": [
+    "sign-language",
+    "asl",
+    "neural-network",
+    "machine-learning",
+    "tensorflow",
+    "speech-synthesis",
+    "computer-vision",
+    "mediapipe"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {}
+}
+

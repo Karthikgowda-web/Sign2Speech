@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Sign2Speech</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h2>Loading Application...</h2>
+            <p id="loadingStatus">Initializing...</p>
+            <div class="loading-progress">
+                <div id="loadingBar" class="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer" style="display: none;">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;"><h2>🤟 Sign2Speech</h2></a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="home.html" class="nav-link active">Home</a></li>
+                    <li><a href="text-to-sign.html" class="nav-link">Text to Sign</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="signup.html" class="nav-link">Sign Up</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Home Page Content -->
+        <div class="page-container">
+            <header class="page-header">
+                <h1 class="fade-in-up">🤟 Advanced Sign to Speech Converter</h1>
+                <p class="subtitle fade-in-up delay-1">Neural Network Powered - Full ASL Recognition</p>
+                <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="about.html" class="btn" style="text-decoration: none; background: rgba(255,255,255,0.2); color: white; border: 2px solid white;">Learn More</a>
+                    <a href="signup.html" class="btn" style="text-decoration: none; background: rgba(255,255,255,0.2); color: white; border: 2px solid white;">Sign Up</a>
+                    <a href="contact.html" class="btn" style="text-decoration: none; background: rgba(255,255,255,0.2); color: white; border: 2px solid white;">Contact</a>
+                </div>
+            </header>
+
+            <main>
+                <!-- Mode Selection -->
+                <div class="mode-section">
+                    <button id="recognitionMode" class="mode-btn active">Recognition Mode</button>
+                    <button id="trainingMode" class="mode-btn">Training Mode</button>
+                </div>
+
+                <!-- Recognition Mode -->
+                <div id="recognitionPanel" class="panel active">
+                    <div class="video-section">
+                        <div class="video-container">
+                            <video id="video" autoplay playsinline></video>
+                            <canvas id="canvas"></canvas>
+                            <div class="overlay">
+                                <div class="status" id="status">Initializing...</div>
+                                <div class="confidence" id="confidence"></div>
+                            </div>
+                        </div>
+                        <div class="controls">
+                            <button id="startBtn" class="btn btn-primary">Start Camera</button>
+                            <button id="stopBtn" class="btn btn-secondary" disabled>Stop Camera</button>
+                            <button id="clearBtn" class="btn btn-clear">Clear Text</button>
+                            <button id="loadModelBtn" class="btn btn-load">Load Model</button>
+                        </div>
+                    </div>
+
+                    <div class="output-section">
+                        <div class="text-display">
+                            <h2>Recognized Text:</h2>
+                            <div id="recognizedText" class="text-box">No signs detected yet...</div>
+                            <div class="word-builder">
+                                <h3>Word Builder:</h3>
+                                <div id="wordDisplay" class="word-display"></div>
+                                <div class="word-controls">
+                                    <button id="addSpaceBtn" class="btn btn-space">Add Space</button>
+                                    <button id="backspaceBtn" class="btn btn-backspace">Backspace</button>
+                                    <button id="addWordBtn" class="btn btn-add">Add to Sentence</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="speech-controls">
+                            <button id="speakBtn" class="btn btn-speak" type="button" disabled>🔊 Speak Text</button>
+                            <select id="voiceSelect" class="voice-select" title="Select voice language (Kannada supported)">
+                                <option value="">Select Voice (Default)</option>
+                            </select>
+                            <input type="range" id="speedRange" min="0.5" max="2" step="0.1" value="1" class="speed-range">
+                            <label for="speedRange">Speed: <span id="speedValue">1.0</span>x</label>
+                            <div style="font-size: 0.85em; color: #667eea; margin-top: 5px;">
+                                <span>🇮🇳 Kannada (ಕನ್ನಡ) voices available</span>
+                            </div>
+                            <div id="speechStatus" style="font-size: 0.8em; color: #666; margin-top: 5px; min-height: 20px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="alphabet-grid">
+                        <h3>ASL Alphabet Recognition</h3>
+                        <div id="alphabetDisplay" class="alphabet-container"></div>
+                    </div>
+                </div>
+
+                <!-- Training Mode -->
+                <div id="trainingPanel" class="panel">
+                    <div class="training-section">
+                        <h2>Model Training & Data Collection</h2>
+                        
+                        <div class="training-info-box">
+                            <h3>📚 Quick Start Guide</h3>
+                            <p><strong>Option A: Import Excel File</strong> (For large datasets)</p>
+                            <ol>
+                                <li>Click <strong>"Import Excel File"</strong> button</li>
+                                <li>Select your Excel file (.xlsx or .xls)</li>
+                                <li>Wait for import to complete</li>
+                                <li>Click <strong>"Train Model"</strong> button</li>
+                            </ol>
+                            <p style="margin-top: 15px;"><strong>Option B: Collect Data Manually</strong></p>
+                            <ol>
+                                <li><strong>Enter Sign Label:</strong> Type a letter (A-Z) or word (e.g., "A", "HELLO")</li>
+                                <li><strong>Set Samples:</strong> 30-50 samples is good to start (more = better accuracy)</li>
+                                <li><strong>Start Camera:</strong> Click "Start Camera" button</li>
+                                <li><strong>Collect Data:</strong> Click "Start Collecting Data" and perform the sign repeatedly</li>
+                                <li><strong>Repeat:</strong> Do this for at least 2 different signs</li>
+                                <li><strong>Train:</strong> Click "Train Model" button (takes 2-5 minutes)</li>
+                            </ol>
+                            <p style="margin-top: 15px; color: #d32f2f;"><strong>📖 See EXCEL_IMPORT_GUIDE.md for Excel format requirements</strong></p>
+                        </div>
+                        
+                        <div class="training-controls">
+                            <div class="input-group">
+                                <label for="signLabel">Sign Label (A-Z, 0-9, or word):</label>
+                                <input type="text" id="signLabel" placeholder="e.g., A, B, HELLO" maxlength="20">
+                            </div>
+                            <div class="input-group">
+                                <label for="samplesCount">Samples to Collect:</label>
+                                <input type="number" id="samplesCount" value="50" min="10" max="500">
+                            </div>
+                            <button id="startTrainingBtn" class="btn btn-train">Start Collecting Data</button>
+                            <button id="trainModelBtn" class="btn btn-train-model" disabled>Train Model</button>
+                            <button id="exportDataBtn" class="btn btn-export">Export Training Data</button>
+                            <button id="importDataBtn" class="btn btn-import">Import JSON Data</button>
+                            <button id="importExcelBtn" class="btn btn-import-excel">Import Excel File</button>
+                        </div>
+
+                        <div class="training-progress">
+                            <div class="progress-bar">
+                                <div id="progressFill" class="progress-fill"></div>
+                            </div>
+                            <div id="progressText" class="progress-text">Ready to collect data</div>
+                        </div>
+
+                        <div class="training-stats">
+                            <h3>Training Data Statistics</h3>
+                            <div id="statsDisplay" class="stats-container"></div>
+                        </div>
+
+                        <div class="model-info">
+                            <h3>Model Information</h3>
+                            <div id="modelInfo" class="info-box">
+                                <p>No model loaded. Click "Load Model" or train a new one.</p>
+                            </div>
+                            <button id="saveModelBtn" class="btn btn-save" disabled>Save Model</button>
+                            <button id="downloadModelBtn" class="btn btn-download" disabled>Download Model</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Loader Script - Loads resources asynchronously -->
+    <script src="loader.js"></script>
+    <script src="nav.js"></script>
+</body>
+</html>
+

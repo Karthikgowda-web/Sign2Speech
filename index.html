@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Sign to Speech Converter - ML Powered</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h2>Loading Application...</h2>
+            <p id="loadingStatus">Initializing...</p>
+            <div class="loading-progress">
+                <div id="loadingBar" class="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer" style="display: none;">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>🤟 Sign2Speech</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#about" class="nav-link" data-page="about">About</a></li>
+                    <li><a href="#signup" class="nav-link" data-page="signup">Sign Up</a></li>
+                    <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Container -->
+        <div class="page-container">
+            <!-- Home Page -->
+            <div id="home-page" class="page active">
+                <header class="page-header">
+                    <h1 class="fade-in-up">🤟 Advanced Sign to Speech Converter</h1>
+                    <p class="subtitle fade-in-up delay-1">Neural Network Powered - Full ASL Recognition</p>
+                </header>
+
+                <main>
+            <!-- Mode Selection -->
+            <div class="mode-section">
+                <button id="recognitionMode" class="mode-btn active">Recognition Mode</button>
+                <button id="trainingMode" class="mode-btn">Training Mode</button>
+            </div>
+
+            <!-- Recognition Mode -->
+            <div id="recognitionPanel" class="panel active">
+                <div class="video-section">
+                    <div class="video-container">
+                        <video id="video" autoplay playsinline></video>
+                        <canvas id="canvas"></canvas>
+                        <div class="overlay">
+                            <div class="status" id="status">Initializing...</div>
+                            <div class="confidence" id="confidence"></div>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <button id="startBtn" class="btn btn-primary">Start Camera</button>
+                        <button id="stopBtn" class="btn btn-secondary" disabled>Stop Camera</button>
+                        <button id="clearBtn" class="btn btn-clear">Clear Text</button>
+                        <button id="loadModelBtn" class="btn btn-load">Load Model</button>
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <div class="text-display">
+                        <h2>Recognized Text:</h2>
+                        <div id="recognizedText" class="text-box">No signs detected yet...</div>
+                        <div class="word-builder">
+                            <h3>Word Builder:</h3>
+                            <div id="wordDisplay" class="word-display"></div>
+                            <div class="word-controls">
+                                <button id="addSpaceBtn" class="btn btn-space">Add Space</button>
+                                <button id="backspaceBtn" class="btn btn-backspace">Backspace</button>
+                                <button id="addWordBtn" class="btn btn-add">Add to Sentence</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="speech-controls">
+                        <button id="speakBtn" class="btn btn-speak" disabled>🔊 Speak Text</button>
+                        <select id="voiceSelect" class="voice-select">
+                            <option value="">Select Voice</option>
+                        </select>
+                        <input type="range" id="speedRange" min="0.5" max="2" step="0.1" value="1" class="speed-range">
+                        <label for="speedRange">Speed: <span id="speedValue">1.0</span>x</label>
+                    </div>
+                </div>
+
+                <div class="alphabet-grid">
+                    <h3>ASL Alphabet Recognition</h3>
+                    <div id="alphabetDisplay" class="alphabet-container"></div>
+                </div>
+            </div>
+
+            <!-- Training Mode -->
+            <div id="trainingPanel" class="panel">
+                <div class="training-section">
+                    <h2>Model Training & Data Collection</h2>
+                    
+                    <div class="training-info-box">
+                        <h3>📚 Quick Start Guide</h3>
+                        <p><strong>Option A: Import Excel File</strong> (For large datasets)</p>
+                        <ol>
+                            <li>Click <strong>"Import Excel File"</strong> button</li>
+                            <li>Select your Excel file (.xlsx or .xls)</li>
+                            <li>Wait for import to complete</li>
+                            <li>Click <strong>"Train Model"</strong> button</li>
+                        </ol>
+                        <p style="margin-top: 15px;"><strong>Option B: Collect Data Manually</strong></p>
+                        <ol>
+                            <li><strong>Enter Sign Label:</strong> Type a letter (A-Z) or word (e.g., "A", "HELLO")</li>
+                            <li><strong>Set Samples:</strong> 30-50 samples is good to start (more = better accuracy)</li>
+                            <li><strong>Start Camera:</strong> Click "Start Camera" button</li>
+                            <li><strong>Collect Data:</strong> Click "Start Collecting Data" and perform the sign repeatedly</li>
+                            <li><strong>Repeat:</strong> Do this for at least 2 different signs</li>
+                            <li><strong>Train:</strong> Click "Train Model" button (takes 2-5 minutes)</li>
+                        </ol>
+                        <p style="margin-top: 15px; color: #d32f2f;"><strong>📖 See EXCEL_IMPORT_GUIDE.md for Excel format requirements</strong></p>
+                    </div>
+                    
+                    <div class="training-controls">
+                        <div class="input-group">
+                            <label for="signLabel">Sign Label (A-Z, 0-9, or word):</label>
+                            <input type="text" id="signLabel" placeholder="e.g., A, B, HELLO" maxlength="20">
+                        </div>
+                        <div class="input-group">
+                            <label for="samplesCount">Samples to Collect:</label>
+                            <input type="number" id="samplesCount" value="50" min="10" max="500">
+                        </div>
+                        <button id="startTrainingBtn" class="btn btn-train">Start Collecting Data</button>
+                        <button id="trainModelBtn" class="btn btn-train-model" disabled>Train Model</button>
+                        <button id="exportDataBtn" class="btn btn-export">Export Training Data</button>
+                        <button id="importDataBtn" class="btn btn-import">Import JSON Data</button>
+                        <button id="importExcelBtn" class="btn btn-import-excel">Import Excel File</button>
+                    </div>
+
+                    <div class="training-progress">
+                        <div class="progress-bar">
+                            <div id="progressFill" class="progress-fill"></div>
+                        </div>
+                        <div id="progressText" class="progress-text">Ready to collect data</div>
+                    </div>
+
+                    <div class="training-stats">
+                        <h3>Training Data Statistics</h3>
+                        <div id="statsDisplay" class="stats-container"></div>
+                    </div>
+
+                    <div class="model-info">
+                        <h3>Model Information</h3>
+                        <div id="modelInfo" class="info-box">
+                            <p>No model loaded. Click "Load Model" or train a new one.</p>
+                        </div>
+                        <button id="saveModelBtn" class="btn btn-save" disabled>Save Model</button>
+                        <button id="downloadModelBtn" class="btn btn-download" disabled>Download Model</button>
+                    </div>
+                </div>
+            </div>
+                </main>
+            </div>
+
+            <!-- About Page -->
+            <div id="about-page" class="page">
+                <div class="page-content">
+                    <h1 class="page-title fade-in">About Sign2Speech</h1>
+                    <div class="about-content">
+                        <div class="about-card slide-in-left">
+                            <h2>🎯 Our Mission</h2>
+                            <p>Sign2Speech is an innovative application that bridges the communication gap between sign language and spoken language. Using advanced machine learning and neural networks, we convert American Sign Language (ASL) gestures into real-time speech, making communication more accessible for everyone.</p>
+                        </div>
+                        <div class="about-card slide-in-right">
+                            <h2>🚀 Technology</h2>
+                            <p>Our application leverages cutting-edge technologies including:</p>
+                            <ul>
+                                <li>MediaPipe for hand tracking and gesture recognition</li>
+                                <li>TensorFlow.js for neural network-based classification</li>
+                                <li>Web Speech API for text-to-speech conversion</li>
+                                <li>Real-time video processing and feature extraction</li>
+                            </ul>
+                        </div>
+                        <div class="about-card slide-in-left">
+                            <h2>✨ Features</h2>
+                            <ul>
+                                <li>Real-time ASL alphabet recognition</li>
+                                <li>Custom sign training and model creation</li>
+                                <li>Word and sentence building</li>
+                                <li>Multiple voice options for speech synthesis</li>
+                                <li>Excel data import for bulk training</li>
+                                <li>Model export and sharing capabilities</li>
+                            </ul>
+                        </div>
+                        <div class="about-card slide-in-right">
+                            <h2>👥 Who We Are</h2>
+                            <p>We are a team of developers passionate about making technology accessible and inclusive. Our goal is to create tools that help break down communication barriers and empower the deaf and hard-of-hearing community.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signup Page -->
+            <div id="signup-page" class="page">
+                <div class="page-content">
+                    <h1 class="page-title fade-in">Create Your Account</h1>
+                    <div class="form-container slide-in-up">
+                        <form id="signup-form" class="auth-form">
+                            <div class="form-group">
+                                <label for="signup-name">Full Name</label>
+                                <input type="text" id="signup-name" name="name" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-email">Email Address</label>
+                                <input type="email" id="signup-email" name="email" required placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-password">Password</label>
+                                <input type="password" id="signup-password" name="password" required placeholder="Create a password" minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-confirm">Confirm Password</label>
+                                <input type="password" id="signup-confirm" name="confirmPassword" required placeholder="Confirm your password" minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-phone">Phone Number (Optional)</label>
+                                <input type="tel" id="signup-phone" name="phone" placeholder="Enter your phone number">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-submit">Sign Up</button>
+                            <div id="signup-message" class="form-message"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div id="contact-page" class="page">
+                <div class="page-content">
+                    <h1 class="page-title fade-in">Get In Touch</h1>
+                    <div class="contact-container">
+                        <div class="contact-info slide-in-left">
+                            <div class="info-card">
+                                <h3>📧 Email</h3>
+                                <p>support@sign2speech.com</p>
+                            </div>
+                            <div class="info-card">
+                                <h3>📱 Phone</h3>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                            <div class="info-card">
+                                <h3>📍 Address</h3>
+                                <p>123 Tech Street<br>San Francisco, CA 94102</p>
+                            </div>
+                            <div class="info-card">
+                                <h3>🕒 Hours</h3>
+                                <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="contact-form-container slide-in-right">
+                            <form id="contact-form" class="auth-form">
+                                <div class="form-group">
+                                    <label for="contact-name">Your Name</label>
+                                    <input type="text" id="contact-name" name="name" required placeholder="Enter your name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-email">Your Email</label>
+                                    <input type="email" id="contact-email" name="email" required placeholder="Enter your email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-subject">Subject</label>
+                                    <input type="text" id="contact-subject" name="subject" required placeholder="What is this about?">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-message">Message</label>
+                                    <textarea id="contact-message" name="message" required rows="5" placeholder="Enter your message"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-submit">Send Message</button>
+                                <div id="contact-form-message" class="form-message"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loader Script - Loads resources asynchronously -->
+    <script src="loader.js"></script>
+    <script src="navigation.js"></script>
+    <script src="api.js"></script>
+</body>
+</html>

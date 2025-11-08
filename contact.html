@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Sign2Speech</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;"><h2>🤟 Sign2Speech</h2></a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="home.html" class="nav-link">Home</a></li>
+                    <li><a href="text-to-sign.html" class="nav-link">Text to Sign</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="signup.html" class="nav-link">Sign Up</a></li>
+                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Contact Page Content -->
+        <div class="page-container">
+            <div class="page-content">
+                <h1 class="page-title fade-in">Get In Touch</h1>
+                <div class="contact-container">
+                    <div class="contact-info slide-in-left">
+                        <div class="info-card">
+                            <h3>📧 Email</h3>
+                            <p>support@sign2speech.com</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>📱 Phone</h3>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>📍 Address</h3>
+                            <p>123 Tech Street<br>San Francisco, CA 94102</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>🕒 Hours</h3>
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="contact-form-container slide-in-right">
+                        <form id="contact-form" class="auth-form">
+                            <div class="form-group">
+                                <label for="contact-name">Your Name</label>
+                                <input type="text" id="contact-name" name="name" required placeholder="Enter your name">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Your Email</label>
+                                <input type="email" id="contact-email" name="email" required placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-subject">Subject</label>
+                                <input type="text" id="contact-subject" name="subject" required placeholder="What is this about?">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-message">Message</label>
+                                <textarea id="contact-message" name="message" required rows="5" placeholder="Enter your message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-submit">Send Message</button>
+                            <div id="contact-form-message" class="form-message"></div>
+                        </form>
+                        
+                        <!-- Additional Links -->
+                        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+                            <p style="color: #666; margin-bottom: 15px;">Want to explore more?</p>
+                            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                                <a href="home.html" class="btn" style="text-decoration: none; background: #667eea; color: white; padding: 10px 20px; border-radius: 8px;">Try App</a>
+                                <a href="about.html" class="btn" style="text-decoration: none; background: #95a5a6; color: white; padding: 10px 20px; border-radius: 8px;">About</a>
+                                <a href="signup.html" class="btn" style="text-decoration: none; background: #27ae60; color: white; padding: 10px 20px; border-radius: 8px;">Sign Up</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="nav.js"></script>
+</body>
+</html>
+

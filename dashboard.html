@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sign2Speech</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <style>
+        .dashboard-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .dashboard-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .dashboard-title {
+            font-size: 3.5em;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.5em;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 60px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .nav-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+            padding: 0 20px;
+        }
+
+        .nav-button {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .nav-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: #667eea;
+        }
+
+        .nav-button:active {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .nav-button-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        .nav-button:nth-child(1) .nav-button-icon {
+            animation-delay: 0s;
+        }
+
+        .nav-button:nth-child(2) .nav-button-icon {
+            animation-delay: 0.2s;
+        }
+
+        .nav-button:nth-child(3) .nav-button-icon {
+            animation-delay: 0.4s;
+        }
+
+        .nav-button:nth-child(4) .nav-button-icon {
+            animation-delay: 0.6s;
+        }
+
+        .nav-button-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #667eea;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-button-description {
+            font-size: 1em;
+            color: #666;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-button-arrow {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1.5em;
+            color: #667eea;
+            transition: transform 0.3s;
+            z-index: 1;
+        }
+
+        .nav-button:hover .nav-button-arrow {
+            transform: translate(5px, -5px);
+        }
+
+        /* Individual button colors */
+        .nav-button.home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .nav-button.home .nav-button-title,
+        .nav-button.home .nav-button-description {
+            color: white;
+        }
+
+        .nav-button.home .nav-button-arrow {
+            color: white;
+        }
+
+        .nav-button.about {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .nav-button.about .nav-button-title,
+        .nav-button.about .nav-button-description {
+            color: white;
+        }
+
+        .nav-button.about .nav-button-arrow {
+            color: white;
+        }
+
+        .nav-button.signup {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .nav-button.signup .nav-button-title,
+        .nav-button.signup .nav-button-description {
+            color: white;
+        }
+
+        .nav-button.signup .nav-button-arrow {
+            color: white;
+        }
+
+        .nav-button.contact {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .nav-button.contact .nav-button-title,
+        .nav-button.contact .nav-button-description {
+            color: white;
+        }
+
+        .nav-button.contact .nav-button-arrow {
+            color: white;
+        }
+
+        /* Staggered animation for buttons */
+        .nav-button:nth-child(1) {
+            animation: slideInLeft 0.8s ease-out 0.3s both;
+        }
+
+        .nav-button:nth-child(2) {
+            animation: slideInRight 0.8s ease-out 0.5s both;
+        }
+
+        .nav-button:nth-child(3) {
+            animation: slideInLeft 0.8s ease-out 0.7s both;
+        }
+
+        .nav-button:nth-child(4) {
+            animation: slideInRight 0.8s ease-out 0.9s both;
+        }
+
+        /* Status indicator */
+        .server-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e74c3c;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.connected {
+            background: #27ae60;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-title {
+                font-size: 2.5em;
+            }
+
+            .dashboard-subtitle {
+                font-size: 1.2em;
+            }
+
+            .nav-buttons-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .nav-button {
+                padding: 30px 20px;
+            }
+
+            .server-status {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        .nav-button.loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Server Status Indicator -->
+    <div class="server-status" id="serverStatus">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Checking connection...</span>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="dashboard-content">
+            <h1 class="dashboard-title">🤟 Sign2Speech</h1>
+            <p class="dashboard-subtitle">Welcome to Your Sign Language Converter Dashboard</p>
+
+            <div class="nav-buttons-grid">
+                <!-- Home Button -->
+                <a href="home.html" class="nav-button home" id="homeBtn">
+                    <span class="nav-button-icon">🏠</span>
+                    <div class="nav-button-title">Home</div>
+                    <div class="nav-button-description">Access the main sign-to-speech converter application with real-time recognition</div>
+                    <span class="nav-button-arrow">→</span>
+                </a>
+
+                <!-- About Button -->
+                <a href="about.html" class="nav-button about" id="aboutBtn">
+                    <span class="nav-button-icon">ℹ️</span>
+                    <div class="nav-button-title">About</div>
+                    <div class="nav-button-description">Learn about our mission, technology, and features</div>
+                    <span class="nav-button-arrow">→</span>
+                </a>
+
+                <!-- Sign Up Button -->
+                <a href="signup.html" class="nav-button signup" id="signupBtn">
+                    <span class="nav-button-icon">✍️</span>
+                    <div class="nav-button-title">Sign Up</div>
+                    <div class="nav-button-description">Create your account and join our community</div>
+                    <span class="nav-button-arrow">→</span>
+                </a>
+
+                <!-- Contact Button -->
+                <a href="contact.html" class="nav-button contact" id="contactBtn">
+                    <span class="nav-button-icon">📧</span>
+                    <div class="nav-button-title">Contact</div>
+                    <div class="nav-button-description">Get in touch with us for support or inquiries</div>
+                    <span class="nav-button-arrow">→</span>
+                </a>
+
+                <!-- Text to Sign Button -->
+                <a href="text-to-sign.html" class="nav-button" id="textToSignBtn" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white;">
+                    <span class="nav-button-icon">🔄</span>
+                    <div class="nav-button-title">Text to Sign</div>
+                    <div class="nav-button-description">Convert text to sign language using ML</div>
+                    <span class="nav-button-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check server connection
+        const API_BASE_URL = 'http://localhost:3000/api';
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const serverStatus = document.getElementById('serverStatus');
+
+        async function checkServerConnection() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/health`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    statusDot.classList.add('connected');
+                    statusText.textContent = 'Server Connected';
+                    serverStatus.style.background = 'rgba(39, 174, 96, 0.9)';
+                    serverStatus.style.color = 'white';
+                } else {
+                    throw new Error('Server not responding');
+                }
+            } catch (error) {
+                statusDot.classList.remove('connected');
+                statusText.textContent = 'Server Offline';
+                serverStatus.style.background = 'rgba(231, 76, 60, 0.9)';
+                serverStatus.style.color = 'white';
+                console.warn('Server connection failed:', error);
+            }
+        }
+
+        // Check connection on load and every 10 seconds
+        checkServerConnection();
+        setInterval(checkServerConnection, 10000);
+
+        // Add click animations
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Add loading state
+                this.classList.add('loading');
+                
+                // Remove loading after navigation
+                setTimeout(() => {
+                    this.classList.remove('loading');
+                }, 500);
+            });
+
+            // Add hover sound effect (optional - can be removed)
+            button.addEventListener('mouseenter', function() {
+                // Visual feedback only
+                this.style.transform = 'translateY(-10px) scale(1.05)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add page load animation
+        document.body.style.opacity = '0';
+        setTimeout(() => {
+            document.body.style.transition = 'opacity 0.5s ease-in';
+            document.body.style.opacity = '1';
+        }, 100);
+    </script>
+</body>
+</html>
+

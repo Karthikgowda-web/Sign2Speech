@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Sign2Speech</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;"><h2>🤟 Sign2Speech</h2></a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="home.html" class="nav-link">Home</a></li>
+                    <li><a href="text-to-sign.html" class="nav-link">Text to Sign</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="signup.html" class="nav-link active">Sign Up</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Signup Page Content -->
+        <div class="page-container">
+            <div class="page-content">
+                <h1 class="page-title fade-in">Create Your Account</h1>
+                <div class="form-container slide-in-up">
+                    <form id="signup-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="signup-name">Full Name</label>
+                            <input type="text" id="signup-name" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email Address</label>
+                            <input type="email" id="signup-email" name="email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" name="password" required placeholder="Create a password" minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-confirm">Confirm Password</label>
+                            <input type="password" id="signup-confirm" name="confirmPassword" required placeholder="Confirm your password" minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-phone">Phone Number (Optional)</label>
+                            <input type="tel" id="signup-phone" name="phone" placeholder="Enter your phone number">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">Sign Up</button>
+                        <div id="signup-message" class="form-message"></div>
+                    </form>
+                    
+                    <!-- Additional Links -->
+                    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+                        <p style="color: #666; margin-bottom: 15px;">Already have an account or want to learn more?</p>
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <a href="home.html" class="btn" style="text-decoration: none; background: #3498db; color: white; padding: 10px 20px; border-radius: 8px;">Try Demo</a>
+                            <a href="about.html" class="btn" style="text-decoration: none; background: #95a5a6; color: white; padding: 10px 20px; border-radius: 8px;">About Us</a>
+                            <a href="contact.html" class="btn" style="text-decoration: none; background: #95a5a6; color: white; padding: 10px 20px; border-radius: 8px;">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="nav.js"></script>
+</body>
+</html>
+
